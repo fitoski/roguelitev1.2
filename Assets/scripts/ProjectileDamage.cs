@@ -5,6 +5,13 @@ public class ProjectileDamage : MonoBehaviour
     [SerializeField]
     private int damage = 1;
 
+    private GameObject attacker;
+
+    public void SetAttacker(GameObject newParent)
+    {
+        attacker = newParent;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -12,7 +19,8 @@ public class ProjectileDamage : MonoBehaviour
             Health health = other.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                health.TakeDamage(damage, gameObject);
+                health.TakeDamage(damage, attacker);
+                Destroy(gameObject);
             }
         }
     }

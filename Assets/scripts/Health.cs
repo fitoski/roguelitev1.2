@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
-    public Vector3 healthBarOffset = new Vector3(0, 0, 0);
+    private Vector3 healthBarOffset = new Vector3(0, 1.5f, 0);
 
     public GameObject healthBarPrefab;
     private GameObject healthBarObject;
@@ -17,18 +17,19 @@ public class Health : MonoBehaviour
     public float invulnerabilityDuration = 0.5f;
     private bool isInvulnerable = false;
 
+    [SerializeField] private GameObject coinPrefab;
+
 
     private void Start()
     {
         currentHealth = maxHealth;
-        healthBarObject = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-        healthBarObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
-        healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
+        healthBarObject = Instantiate(healthBarPrefab, transform.position + healthBarOffset, Quaternion.identity, transform);
+        //healthBarObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
+        //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
         healthBarSlider = healthBarObject.GetComponentInChildren<Slider>();
         healthBarSlider.maxValue = maxHealth;
         healthBarSlider.value = currentHealth;
         playerExperience = FindObjectOfType<PlayerExperience>();
-
     }
 
     private IEnumerator Invulnerability()
@@ -72,14 +73,15 @@ public class Health : MonoBehaviour
         }
 
         healthBarSlider.value = currentHealth;
-        healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
+        //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (healthBarObject != null)
         {
-            healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
+            healthBarObject.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+            //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
         }
     }
 
@@ -106,6 +108,8 @@ public class Health : MonoBehaviour
                     Debug.Log("Player gains " + experienceReward + " experience points.");
                     playerExperience.GainExperience(experienceReward);
                 }
+
+                GameObject droppedCoin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
         }

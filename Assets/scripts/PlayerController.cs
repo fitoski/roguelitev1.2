@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private void ThrowStone()
     {
         GameObject newStone = Instantiate(stonePrefab, _spawnPoint, transform.rotation);
+        newStone.GetComponent<ProjectileDamage>().SetAttacker(gameObject);
         Rigidbody stoneRigidbody = newStone.GetComponent<Rigidbody>();
         Vector3 force = transform.forward * throwForce;
         force.y = 0;

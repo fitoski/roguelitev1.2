@@ -19,7 +19,7 @@ public class PlayerExperience : MonoBehaviour
     private void LevelUp()
     {
         level++;
-        experience -= experienceToNextLevel;
+        experience = 0;
         experienceToNextLevel = Mathf.RoundToInt(experienceToNextLevel * 1.5f);
         Debug.Log("Level up! New level: " + level + ", experience to next level: " + experienceToNextLevel); 
     }
