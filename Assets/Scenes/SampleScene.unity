@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,10 +228,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  healthBarOffset: {x: 0, y: 0, z: 0}
   healthBarPrefab: {fileID: 1875794061866669878, guid: e521df4b9309fc84797fc4ec5ebe6949, type: 3}
   experienceReward: 1
   invulnerabilityDuration: 0.5
+  coinPrefab: {fileID: 0}
 --- !u!114 &580458524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e45ae3a0278d174bb3e053f2b809e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickableLayer:
+    serializedVersion: 2
+    m_Bits: 64
   rotationSpeed: 50
 --- !u!114 &580458525
 MonoBehaviour:
@@ -260,6 +263,7 @@ MonoBehaviour:
   stonePrefab: {fileID: 4076772874902413565, guid: 441f7644955430c4fb06be26bb3cc608, type: 3}
   throwInterval: 1
   throwForce: 500
+  coinText: {fileID: 1481626336}
 --- !u!54 &580458526
 Rigidbody:
   m_ObjectHideFlags: 0

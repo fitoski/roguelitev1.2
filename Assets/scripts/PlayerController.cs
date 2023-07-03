@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,15 @@ public class PlayerController : MonoBehaviour
     private float nextThrowTime = 0f;
     private Vector3 _spawnPoint => transform.position + transform.forward * 1f + new Vector3(0, 0.5f, 0);
     public float throwForce = 500f;
+
+    private int playerCoin = 0;
+
+    [SerializeField] private TMP_Text coinText;
+
+    private void Awake()
+    {
+        coinText.text = "Altın: " + playerCoin.ToString();
+    }
 
     void Update()
     {
@@ -29,4 +39,9 @@ public class PlayerController : MonoBehaviour
         stoneRigidbody.AddForce(force);
     }
 
+    public void PickUpCoin()
+    {
+        playerCoin++;
+        coinText.text = "Altın: " + playerCoin.ToString();
+    }
 }

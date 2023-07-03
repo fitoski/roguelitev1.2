@@ -110,6 +110,7 @@ public class Health : MonoBehaviour
                 }
 
                 GameObject droppedCoin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+                Destroy(droppedCoin, 15f);
             }
             Destroy(gameObject);
         }
