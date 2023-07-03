@@ -26,4 +26,4 @@ public class SwipeRotation : MonoBehaviour
 }
 
 
-// SERHAN PUŞTTTTTTTTTTTT
+// SERHAN PUŞTTTTTTTTTTTT123123
