@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6564253365623609632}
   - component: {fileID: 280376568345294200}
   m_Layer: 0
-  m_Name: stones
+  m_Name: Stone
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 809632c8c189a1a47b3258804c61438e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,5 +159,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d52f8f66a9882f41927cbaca4ba6cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shooter: {fileID: 0}
-  isPlayerProjectile: 0
+  damage: 1

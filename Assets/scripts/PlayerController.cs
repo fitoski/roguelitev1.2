@@ -15,6 +15,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private TMP_Text coinText;
 
+    [SerializeField] private float burstCooldown = 0.1f;
+
+    [SerializeField] private int burstCount = 1;
+
+    [SerializeField] private List<Material> throwableMaterials = new List<Material>();
+    private int throwableMaterial = 0;
+
     private void Awake()
     {
         coinText.text = "Altın: " + playerCoin.ToString();
@@ -24,19 +31,40 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.time >= nextThrowTime)
         {
-            ThrowStone();
+            StartCoroutine(ThrowStone());
             nextThrowTime = Time.time + throwInterval;
         }
     }
 
-    private void ThrowStone()
+    private IEnumerator ThrowStone()
     {
-        GameObject newStone = Instantiate(stonePrefab, _spawnPoint, transform.rotation);
-        newStone.GetComponent<ProjectileDamage>().SetAttacker(gameObject);
-        Rigidbody stoneRigidbody = newStone.GetComponent<Rigidbody>();
-        Vector3 force = transform.forward * throwForce;
-        force.y = 0;
-        stoneRigidbody.AddForce(force);
+        for (int i = 0; i < burstCount; i++)
+        {
+            GameObject newStone = Instantiate(stonePrefab, _spawnPoint, transform.rotation);
+            newStone.GetComponent<MeshRenderer>().material = throwableMaterials[throwableMaterial >= throwableMaterials.Count ? throwableMaterials.Count - 1 : throwableMaterial];
+            newStone.GetComponent<ProjectileDamage>().SetAttacker(gameObject);
+            Rigidbody stoneRigidbody = newStone.GetComponent<Rigidbody>();
+            Vector3 force = transform.forward * throwForce;
+            force.y = 0;
+            stoneRigidbody.AddForce(force);
+
+            if (i != burstCount - 1)
+            {
+                yield return new WaitForSeconds(burstCooldown);
+            }
+        }
+
+        yield return null;
+    }
+
+    public void UpgradeWeapon()
+    {
+        throwableMaterial += 1;
+    }
+
+    public void IncreaseBurstCount(int amount)
+    {
+        burstCount += amount;
     }
 
     public void PickUpCoin()

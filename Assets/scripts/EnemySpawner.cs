@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,6 +20,12 @@ public class EnemySpawner : MonoBehaviour
     public Terrain terrain;
     public float groundHeight;
     public float minSpawnDistance = 10f;
+    [SerializeField] private int numberOfEnemiesToSpawn = 1;
+
+    private List<Health> enemies = new List<Health>();
+
+    [SerializeField] private GameObject coinPrefab;
+
 
     void Start()
     {
@@ -28,12 +35,6 @@ public class EnemySpawner : MonoBehaviour
         yOffset = groundHeight + yOffset;
         StartCoroutine(SpawnEnemyRoutine());
     }
-
-
-
-
-
-
 
     private Vector3 RandomSpawnPosition()
     {
@@ -45,50 +46,52 @@ public class EnemySpawner : MonoBehaviour
         return spawnPosition;
     }
 
-
-
-
-
-    private void SpawnEnemy()
+    public void KillEnemy(Health enemyHealth, GameObject attacker = null)
     {
-        float randomX = Random.Range(minX, maxX);
-        float spawnPosY = yOffset;
-        float randomZ = Random.Range(minZ, maxZ);
-
-        Vector3 spawnPosition = new Vector3(randomX, spawnPosY, randomZ);
-        float distanceToPlayer = Vector3.Distance(spawnPosition, player.transform.position);
-
-        if (distanceToPlayer > distanceFromPlayer && distanceToPlayer > minSpawnDistance)
+        if (attacker != null && attacker.CompareTag("Player"))
         {
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(spawnPosition, out hit, 5.0f, NavMesh.AllAreas))
+            PlayerExperience playerExperience = attacker.GetComponent<PlayerExperience>();
+            if (playerExperience != null)
             {
-                GameObject enemy = Instantiate(enemyPrefab, hit.position, Quaternion.identity);
+                Debug.Log("Player gains " + enemyHealth.experienceReward + " experience points.");
+                playerExperience.GainExperience(enemyHealth.experienceReward);
             }
-            else
-            {
-                SpawnEnemy();
-            }
+
+            GameObject droppedCoin = Instantiate(coinPrefab, enemyHealth.transform.position, Quaternion.identity);
+            Destroy(droppedCoin, 15f);
         }
-        else
+
+        enemies.Remove(enemyHealth);
+        Destroy(enemyHealth.gameObject);
+    }
+
+    public void KillAllEnemies()
+    {
+        while (enemies.Count > 0)
         {
-            SpawnEnemy();
+            KillEnemy(enemies[0], player);
         }
+
+        return;
     }
 
     private IEnumerator SpawnEnemyRoutine()
     {
         while (true)
         {
-            Vector3 spawnPosition = RandomSpawnPosition();
-            float distanceToPlayer = Vector3.Distance(spawnPosition, player.transform.position);
-
-            if (distanceToPlayer > distanceFromPlayer && distanceToPlayer > minSpawnDistance)
+            for (int i = 0; i < numberOfEnemiesToSpawn; i++)
             {
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(spawnPosition, out hit, 5.0f, NavMesh.AllAreas))
+                Vector3 spawnPosition = RandomSpawnPosition();
+                float distanceToPlayer = Vector3.Distance(spawnPosition, player.transform.position);
+
+                if (distanceToPlayer > distanceFromPlayer && distanceToPlayer > minSpawnDistance)
                 {
-                    GameObject enemy = Instantiate(enemyPrefab, hit.position, Quaternion.identity);
+                    NavMeshHit hit;
+                    if (NavMesh.SamplePosition(spawnPosition, out hit, 5.0f, NavMesh.AllAreas))
+                    {
+                        GameObject enemy = Instantiate(enemyPrefab, hit.position, Quaternion.identity);
+                        enemies.Add(enemy.GetComponent<Health>());
+                    }
                 }
             }
 
@@ -96,7 +99,8 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-
-
-
+    public void ChangeNumberOfEnemies(int increaseAmount)
+    {
+        numberOfEnemiesToSpawn += increaseAmount;
+    }
 }

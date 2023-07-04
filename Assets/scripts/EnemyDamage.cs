@@ -21,7 +21,7 @@ public class EnemyDamage : MonoBehaviour
         PlayerExperience playerExperience = FindObjectOfType<PlayerExperience>();
         if (playerExperience != null)
         {
-            float damageMultiplier = 1 + 0.1f * (playerExperience.level - 1);
+            float damageMultiplier = 1 + 0.1f * (playerExperience.Level - 1);
             currentDamage = Mathf.RoundToInt(baseDamage * damageMultiplier);
         }
     }

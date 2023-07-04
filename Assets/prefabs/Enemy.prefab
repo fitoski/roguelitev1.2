@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 5492505243825461585}
   - component: {fileID: -3756810196947227305}
   - component: {fileID: 1890865018401614658}
+  - component: {fileID: 2750690835914387351}
   - component: {fileID: -1819980718238966584}
   - component: {fileID: 6420808646339601666}
   - component: {fileID: 5217644717819220403}
   - component: {fileID: 1316310594337229335}
   m_Layer: 0
-  m_Name: enemies
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,6 +105,19 @@ MonoBehaviour:
   baseDamage: 1
   attackRange: 2
   attackDelay: 1
+--- !u!114 &2750690835914387351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4545755762419729398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b9263fdcd1c0a44ac22e5ac5eb3928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealth: 10
 --- !u!114 &-1819980718238966584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +133,7 @@ MonoBehaviour:
   maxHealth: 3
   healthBarPrefab: {fileID: 1875794061866669878, guid: e521df4b9309fc84797fc4ec5ebe6949, type: 3}
   experienceReward: 1
-  invulnerabilityDuration: 0.5
+  invulnerabilityDuration: 0
   coinPrefab: {fileID: 5928722045429673595, guid: 94eac79228124d1418063f453234663b, type: 3}
 --- !u!114 &6420808646339601666
 MonoBehaviour:

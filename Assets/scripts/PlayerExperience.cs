@@ -2,9 +2,14 @@
 
 public class PlayerExperience : MonoBehaviour
 {
-    public int level = 1;
-    public int experience = 0;
-    public int experienceToNextLevel = 10;
+    [SerializeField] private int level = 1;
+
+    public int Level => level;
+
+    [SerializeField] private int experience = 0;
+    [SerializeField] private int experienceToNextLevel = 10;
+
+    [SerializeField] private GameObject levelUpButtons;
 
     public void GainExperience(int amount)
     {
@@ -21,7 +26,19 @@ public class PlayerExperience : MonoBehaviour
         level++;
         experience = 0;
         experienceToNextLevel = Mathf.RoundToInt(experienceToNextLevel * 1.5f);
-        Debug.Log("Level up! New level: " + level + ", experience to next level: " + experienceToNextLevel); 
+        Debug.Log("Level up! New level: " + level + ", experience to next level: " + experienceToNextLevel);
+
+        Time.timeScale = 0;
+        levelUpButtons.SetActive(true);
+        levelUpButtons.GetComponent<LevelUpUpgradesController>().SetUpUpgrades();
     }
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K)) 
+        {
+            LevelUp();
+        }
+    }
 }

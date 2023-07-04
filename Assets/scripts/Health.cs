@@ -17,18 +17,14 @@ public class Health : MonoBehaviour
     public float invulnerabilityDuration = 0.5f;
     private bool isInvulnerable = false;
 
-    [SerializeField] private GameObject coinPrefab;
-
-
-    private void Start()
+    private void Awake()
     {
         currentHealth = maxHealth;
         healthBarObject = Instantiate(healthBarPrefab, transform.position + healthBarOffset, Quaternion.identity, transform);
         //healthBarObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
         //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
         healthBarSlider = healthBarObject.GetComponentInChildren<Slider>();
-        healthBarSlider.maxValue = maxHealth;
-        healthBarSlider.value = currentHealth;
+        healthBarSlider.value = 1;
         playerExperience = FindObjectOfType<PlayerExperience>();
     }
 
@@ -59,11 +55,6 @@ public class Health : MonoBehaviour
         UpdateHealthBar();
     }
 
-
-
-
-
-
     private void UpdateHealthBar()
     {
         if (healthBarSlider == null)
@@ -72,7 +63,7 @@ public class Health : MonoBehaviour
             return;
         }
 
-        healthBarSlider.value = currentHealth;
+        healthBarSlider.value = ((float) currentHealth) / maxHealth;
         //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
     }
 
@@ -100,19 +91,7 @@ public class Health : MonoBehaviour
         }
         else
         {
-            if (attacker != null && attacker.CompareTag("Player"))
-            {
-                PlayerExperience playerExperience = attacker.GetComponent<PlayerExperience>();
-                if (playerExperience != null)
-                {
-                    Debug.Log("Player gains " + experienceReward + " experience points.");
-                    playerExperience.GainExperience(experienceReward);
-                }
-
-                GameObject droppedCoin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
-                Destroy(droppedCoin, 15f);
-            }
-            Destroy(gameObject);
+            GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>().KillEnemy(this, attacker);
         }
     }
 

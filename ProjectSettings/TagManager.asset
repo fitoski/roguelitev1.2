@@ -8,6 +8,8 @@ TagManager:
   - HealthBarCanvas
   - Projectile
   - Coin
+  - Spawner
+  - SkillButtons
   layers:
   - Default
   - TransparentFX
