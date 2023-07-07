@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class Health : MonoBehaviour
 {
@@ -17,13 +18,13 @@ public class Health : MonoBehaviour
     public float invulnerabilityDuration = 0.5f;
     private bool isInvulnerable = false;
 
+    private TMP_Text textBox;
+
     private void Awake()
     {
-        currentHealth = maxHealth;
         healthBarObject = Instantiate(healthBarPrefab, transform.position + healthBarOffset, Quaternion.identity, transform);
-        //healthBarObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
-        //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
         healthBarSlider = healthBarObject.GetComponentInChildren<Slider>();
+        textBox = healthBarSlider.GetComponentInChildren<TMP_Text>();
         healthBarSlider.value = 1;
         playerExperience = FindObjectOfType<PlayerExperience>();
     }
@@ -35,9 +36,17 @@ public class Health : MonoBehaviour
         isInvulnerable = false;
     }
 
+    public void InitHealth(int newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+        currentHealth = maxHealth;
+        UpdateHealthBar();
+    }
+
     public void SetMaxHealth(int newMaxHealth)
     {
         maxHealth = newMaxHealth;
+        UpdateHealthBar();
     }
 
     public void TakeDamage(int damage, GameObject attacker)
@@ -58,7 +67,7 @@ public class Health : MonoBehaviour
         UpdateHealthBar();
     }
 
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         if (healthBarSlider == null)
         {
@@ -67,7 +76,7 @@ public class Health : MonoBehaviour
         }
 
         healthBarSlider.value = ((float) currentHealth) / maxHealth;
-        //healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
+        textBox.text = currentHealth.ToString() + "/" + maxHealth.ToString();
     }
 
     private void LateUpdate()
@@ -97,10 +106,6 @@ public class Health : MonoBehaviour
             GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>().KillEnemy(this, attacker);
         }
     }
-
-
-
-
 
 
     private void OnDestroy()

@@ -130,11 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63685dea2b52f0f42914eabe748ce2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
   healthBarPrefab: {fileID: 1875794061866669878, guid: e521df4b9309fc84797fc4ec5ebe6949, type: 3}
   experienceReward: 1
   invulnerabilityDuration: 0
-  coinPrefab: {fileID: 5928722045429673595, guid: 94eac79228124d1418063f453234663b, type: 3}
 --- !u!114 &6420808646339601666
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,15 +24,25 @@ public class PlayerController : MonoBehaviour
     private int throwableMaterial = 0;
 
     [SerializeField] private int baseDamage;
-    private int shopBonusDamage = 0;
+    private int shopBonusDamage => gameManager.ShopBonusDamage;
     public int Damage => baseDamage + shopBonusDamage;
 
-    private int baseMaxHealth;
-    private int shopUpgradeBonusHealth;
+    [SerializeField] private int baseMaxHealth = 10;
+    private int shopBonusMaxHealth => gameManager.ShopBonusMaxHealth;
+    public int MaxHealth => baseMaxHealth + shopBonusMaxHealth;
+
+    private GameManager gameManager;
+    private Health health;
 
     private void Awake()
     {
+        health = GetComponent<Health>();    
+
         coinText.text = "Altın: " + playerCoin.ToString();
+
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
+        health.InitHealth(MaxHealth);
     }
 
     void Update()
@@ -41,6 +51,11 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(ThrowStone());
             nextThrowTime = Time.time + throwInterval;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GetComponent<Health>().TakeDamage(1000, null);
         }
     }
 
@@ -92,8 +107,8 @@ public class PlayerController : MonoBehaviour
         coinText.text = "Altın: " + playerCoin.ToString();
     }
 
-    public void AddShopBonusDamage(int bonusDamage)
+    public void UpdateMaxHealth()
     {
-        shopBonusDamage += bonusDamage;
+        health.SetMaxHealth(MaxHealth);
     }
 }

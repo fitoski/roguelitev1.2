@@ -5,8 +5,16 @@ using UnityEngine;
 public abstract class ShopUpgrade : MonoBehaviour
 {
     [SerializeField] private int price;
+    protected GameManager gameManager;
+    protected PlayerController playerController;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
     protected abstract void ApplyEffect(GameObject target);
-    public bool BuyUpgrade(PlayerController playerController) 
+    private bool BuyUpgrade(PlayerController playerController) 
     {
         if (playerController.SpendCoin(price))
         {
@@ -15,5 +23,10 @@ public abstract class ShopUpgrade : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void OnClicked()
+    {
+        BuyUpgrade(playerController);
     }
 }
