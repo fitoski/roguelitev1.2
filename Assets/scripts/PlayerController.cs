@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float throwForce = 500f;
 
     private int playerCoin = 0;
+    public int PlayerCoin => playerCoin;
 
     [SerializeField] private TMP_Text coinText;
 
@@ -21,6 +22,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private List<Material> throwableMaterials = new List<Material>();
     private int throwableMaterial = 0;
+
+    [SerializeField] private int baseDamage;
+    private int shopBonusDamage = 0;
+    public int Damage => baseDamage + shopBonusDamage;
+
+    private int baseMaxHealth;
+    private int shopUpgradeBonusHealth;
 
     private void Awake()
     {
@@ -42,7 +50,7 @@ public class PlayerController : MonoBehaviour
         {
             GameObject newStone = Instantiate(stonePrefab, _spawnPoint, transform.rotation);
             newStone.GetComponent<MeshRenderer>().material = throwableMaterials[throwableMaterial >= throwableMaterials.Count ? throwableMaterials.Count - 1 : throwableMaterial];
-            newStone.GetComponent<ProjectileDamage>().SetAttacker(gameObject);
+            newStone.GetComponent<ProjectileDamage>().SetAttacker(gameObject, Damage);
             Rigidbody stoneRigidbody = newStone.GetComponent<Rigidbody>();
             Vector3 force = transform.forward * throwForce;
             force.y = 0;
@@ -55,6 +63,17 @@ public class PlayerController : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    public bool SpendCoin(int price)
+    {
+        if (playerCoin >= price)
+        {
+            playerCoin -= price;
+            return true;
+        }
+
+        return false;
     }
 
     public void UpgradeWeapon()
@@ -71,5 +90,10 @@ public class PlayerController : MonoBehaviour
     {
         playerCoin++;
         coinText.text = "Altın: " + playerCoin.ToString();
+    }
+
+    public void AddShopBonusDamage(int bonusDamage)
+    {
+        shopBonusDamage += bonusDamage;
     }
 }

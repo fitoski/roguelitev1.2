@@ -5,10 +5,10 @@ using System.Collections;
 
 public class Health : MonoBehaviour
 {
-    public int maxHealth = 100;
+    private int maxHealth = 100;
+    public int MaxHealth => maxHealth;
     private int currentHealth;
     private Vector3 healthBarOffset = new Vector3(0, 1.5f, 0);
-
     public GameObject healthBarPrefab;
     private GameObject healthBarObject;
     private Slider healthBarSlider;
@@ -35,7 +35,10 @@ public class Health : MonoBehaviour
         isInvulnerable = false;
     }
 
-
+    public void SetMaxHealth(int newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+    }
 
     public void TakeDamage(int damage, GameObject attacker)
     {

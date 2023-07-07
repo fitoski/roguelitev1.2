@@ -2,7 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ShopUpgrade : ScriptableObject
+public abstract class ShopUpgrade : MonoBehaviour
 {
-    public abstract void ApplyEffect(GameObject target);
+    [SerializeField] private int price;
+    protected abstract void ApplyEffect(GameObject target);
+    public bool BuyUpgrade(PlayerController playerController) 
+    {
+        if (playerController.SpendCoin(price))
+        {
+            ApplyEffect(playerController.gameObject);
+            return true;
+        }
+
+        return false;
+    }
 }

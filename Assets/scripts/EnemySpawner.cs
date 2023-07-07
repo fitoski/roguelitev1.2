@@ -67,12 +67,27 @@ public class EnemySpawner : MonoBehaviour
 
     public void KillAllEnemies()
     {
-        while (enemies.Count > 0)
+        int i = 0;
+        while (i < enemies.Count)
         {
-            KillEnemy(enemies[0], player);
+            Health enemy = enemies[i];
+            if (IsEnemyVisibleToCamera(enemy))
+            {
+                KillEnemy(enemy, player);
+            }
+            else
+            {
+                i++;
+            }
         }
 
         return;
+    }
+
+    private bool IsEnemyVisibleToCamera(Health enemy)
+    {
+        Vector3 visTest = Camera.main.WorldToViewportPoint(enemy.transform.position);
+        return (visTest.x >= 0 && visTest.y >= 0) && (visTest.x <= 1 && visTest.y <= 1) && visTest.z >= 0;
     }
 
     private IEnumerator SpawnEnemyRoutine()

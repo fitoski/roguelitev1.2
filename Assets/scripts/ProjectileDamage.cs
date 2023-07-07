@@ -2,14 +2,14 @@
 
 public class ProjectileDamage : MonoBehaviour
 {
-    [SerializeField]
     private int damage = 1;
 
     private GameObject attacker;
 
-    public void SetAttacker(GameObject newParent)
+    public void SetAttacker(GameObject newParent, int newDamage)
     {
         attacker = newParent;
+        damage = newDamage;
     }
 
     void OnTriggerEnter(Collider other)
@@ -24,6 +24,4 @@ public class ProjectileDamage : MonoBehaviour
             }
         }
     }
-
-
 }

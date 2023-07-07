@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
         if (playerExperience != null)
         {
             float healthMultiplier = 1 + 0.2f * (playerExperience.Level - 1);
-            health.maxHealth = Mathf.CeilToInt(health.maxHealth * healthMultiplier);
+            health.SetMaxHealth(Mathf.CeilToInt(health.MaxHealth * healthMultiplier));
             health.ResetCurrentHealth();
         }
     }
