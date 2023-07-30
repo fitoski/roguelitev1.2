@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07c542f6d9bf4b44a3de0dc13543f52, type: 3}
   m_Name: KillEverything
   m_EditorClassIdentifier: 
+  upgradeID: 1
   targetType: 2
   button: {fileID: 2861480367519032272, guid: 19ab4683500dbf14ba6210801c9d110c, type: 3}

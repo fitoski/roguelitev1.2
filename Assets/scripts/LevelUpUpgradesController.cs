@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class LevelUpUpgradesController : MonoBehaviour
 {
-    [SerializeField] private List<LevelUpUpgrade> upgrades = new List<LevelUpUpgrade>();
-
+    private GameManager gameManager;
+    public List<LevelUpUpgrade> Upgrades => gameManager.allUpgrades; 
     private LevelUpButton[] buttons;
 
     private void Awake()
     {
         buttons = GetComponentsInChildren<LevelUpButton>();
+
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();  
     }
 
     public void SetUpUpgrades()
@@ -21,11 +23,11 @@ public class LevelUpUpgradesController : MonoBehaviour
 
         while (selectedUpgrades.Count < buttons.Length)
         {
-            int randomCounter = rnd.Next(upgrades.Count);
+            int randomCounter = rnd.Next(Upgrades.Count);
 
-            if (!selectedUpgrades.Contains(upgrades[randomCounter]))
+            if (!selectedUpgrades.Contains(Upgrades[randomCounter]))
             {
-                selectedUpgrades.Add(upgrades[randomCounter]);
+                selectedUpgrades.Add(Upgrades[randomCounter]);
             }
         }
 

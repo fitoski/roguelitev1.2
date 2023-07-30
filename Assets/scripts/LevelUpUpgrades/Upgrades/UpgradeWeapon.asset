@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c3437387060984490549f0311a0708, type: 3}
   m_Name: UpgradeWeapon
   m_EditorClassIdentifier: 
+  upgradeID: 3
   targetType: 0

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e709b57f6ae19458579b2da76239be, type: 3}
   m_Name: NumberOfEnemies
   m_EditorClassIdentifier: 
+  upgradeID: 2
   targetType: 1
   amount: 1

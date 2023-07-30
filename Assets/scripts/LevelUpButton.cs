@@ -11,11 +11,14 @@ public class LevelUpButton : MonoBehaviour
     private GameObject spawner;
     private GameObject skills;
     private TMP_Text text;
+    private GameManager gameManager;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         spawner = GameObject.FindGameObjectWithTag("Spawner");
         skills = GameObject.FindGameObjectWithTag("SkillButtons");
+
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         text = GetComponentInChildren<TMP_Text>();
     }
@@ -47,8 +50,8 @@ public class LevelUpButton : MonoBehaviour
         }
 
         upgrade.ApplyEffect(target);
+        gameManager.levelUpUpgrades.Add(upgrade);
         transform.parent.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
-
 }

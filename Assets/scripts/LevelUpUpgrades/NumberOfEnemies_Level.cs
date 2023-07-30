@@ -8,7 +8,6 @@ public class NumberOfEnemies_Level : LevelUpUpgrade
     public int amount = 1;
     public override void ApplyEffect(GameObject target)
     {
-        Debug.Log(target.name);
         target.GetComponent<EnemySpawner>().ChangeNumberOfEnemies(amount);
     }
 

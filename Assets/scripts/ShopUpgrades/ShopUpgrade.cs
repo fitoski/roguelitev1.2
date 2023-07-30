@@ -16,7 +16,7 @@ public abstract class ShopUpgrade : MonoBehaviour
     protected abstract void ApplyEffect(GameObject target);
     private bool BuyUpgrade(PlayerController playerController) 
     {
-        if (playerController.SpendCoin(price))
+        if (gameManager.SpendCoin(price))
         {
             ApplyEffect(playerController.gameObject);
             return true;

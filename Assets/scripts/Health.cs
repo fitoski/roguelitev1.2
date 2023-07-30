@@ -6,9 +6,9 @@ using TMPro;
 
 public class Health : MonoBehaviour
 {
-    private int maxHealth = 100;
-    public int MaxHealth => maxHealth;
-    private int currentHealth;
+    private float maxHealth = 100;
+    public float MaxHealth => maxHealth;
+    private float currentHealth;
     private Vector3 healthBarOffset = new Vector3(0, 1.5f, 0);
     public GameObject healthBarPrefab;
     private GameObject healthBarObject;
@@ -49,11 +49,44 @@ public class Health : MonoBehaviour
         UpdateHealthBar();
     }
 
+    public void RegenHealth(float regen)
+    {
+        currentHealth += regen;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        UpdateHealthBar();
+    }
+
     public void TakeDamage(int damage, GameObject attacker)
     {
         if (isInvulnerable || attacker == gameObject) return;
 
-        currentHealth -= damage;
+        PlayerController playerController;
+        float totalDamage = damage;
+
+        if (attacker.CompareTag("Player"))
+        {
+            playerController = playerExperience.GetComponent<PlayerController>();
+
+            Vector3 knockback = (transform.position - playerController.transform.position).normalized * playerController.KnockbackDistance;
+
+            transform.position += knockback;
+
+            float critRandom = Random.Range(0f, 1f);
+
+            if (critRandom <= playerController.CritChance)
+            {
+                totalDamage *= playerController.CritDamage;
+            }
+
+            playerController.OnAttack(totalDamage);
+        }
+
+        currentHealth -= totalDamage;
 
         if (currentHealth <= 0)
         {
@@ -99,6 +132,7 @@ public class Health : MonoBehaviour
     {
         if (gameObject.CompareTag("Player"))
         {
+            SaveSystem.DeleteLevelProgress();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else
