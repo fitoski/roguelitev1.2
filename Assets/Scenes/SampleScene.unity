@@ -225,11 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63685dea2b52f0f42914eabe748ce2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
   healthBarPrefab: {fileID: 1875794061866669878, guid: e521df4b9309fc84797fc4ec5ebe6949, type: 3}
   experienceReward: 1
   invulnerabilityDuration: 0.5
-  coinPrefab: {fileID: 0}
 --- !u!114 &580458524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +260,11 @@ MonoBehaviour:
   throwInterval: 1
   throwForce: 500
   coinText: {fileID: 1481626336}
+  burstCooldown: 0.1
+  burstCount: 1
+  throwableMaterials: []
+  baseDamage: 0
+  baseMaxHealth: 10
 --- !u!54 &580458526
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -322,6 +325,7 @@ MonoBehaviour:
   level: 1
   experience: 0
   experienceToNextLevel: 10
+  levelUpButtons: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +565,8 @@ MonoBehaviour:
   terrain: {fileID: 2057355991}
   groundHeight: 0
   minSpawnDistance: 10
+  numberOfEnemiesToSpawn: 1
+  coinPrefab: {fileID: 0}
 --- !u!4 &798673920
 Transform:
   m_ObjectHideFlags: 0
@@ -761,7 +767,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3408783632463651763, guid: 91a3e51a32ef6334086718bd339ba444, type: 3}
+  - {fileID: 3408783632463651763, guid: 7ed8cf2d1aa458e4798700fb24b9ced9, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -790,7 +796,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296717066}
-  m_Mesh: {fileID: 2791369629923464968, guid: 7527924e48f212e4db82fad182da5914, type: 3}
+  m_Mesh: {fileID: 2791369629923464968, guid: a4cba7ea858dbfe46b84b948012468c9, type: 3}
 --- !u!1 &1481626334
 GameObject:
   m_ObjectHideFlags: 0
